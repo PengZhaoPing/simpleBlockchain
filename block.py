@@ -7,10 +7,14 @@ import MerkleTrees
 import mysql.connector
 def __mining(recvTx):
     try:
+    	tStart = time.time()
         block=Block()
         block.getTransaction(recvTx)
         Chain.addBlock(block.newBlock["blockhash"] ,block.newBlock)
         block.ExchangeBlock()
+        tEnd = time.time()
+        print "It cost %f sec" % (tEnd - tStart)
+        print ""
         return Chain.getBlockFromHeight(Chain.getHeight())
     except Exception as e :
         print e
